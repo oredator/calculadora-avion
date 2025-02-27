@@ -294,67 +294,48 @@
                 let addSurface = document.getElementById("add-surface").checked;
                 let calcSurface = document.getElementById("calc-surface").checked;
 
-                // Mostrar solo la sección correcta sin afectar otros campos
                 document.getElementById("surface-value").classList.toggle("hidden", !addSurface);
                 document.getElementById("surface-fields").classList.toggle("hidden", !calcSurface);
-
-                // Asegurar que el campo de peso siempre esté visible
-                document.getElementById("peso").parentElement.classList.remove("hidden");
-
-                // Desplazar la vista hacia el campo de peso del avión para evitar que quede oculto
-                document.getElementById("peso").scrollIntoView({ behavior: "smooth", block: "center" });
-
                 updateSurfaceResult();
             }
-
-
 
             function updateSurfaceResult() {
                 let surfaceField = document.getElementById("surface-result");
                 let addSurface = document.getElementById("add-surface").checked;
                 let calcSurface = document.getElementById("calc-surface").checked;
-
+                
                 if (addSurface) {
                     let surface = parseFloat(document.getElementById("surface").value);
-                    let adjustedSurface = surface ? (surface / 100).toFixed(2) : "-";
-                    surfaceField.textContent = surface ? `Superficie Alar: ${adjustedSurface} cm²` : "Superficie Alar: -";
+                    surfaceField.textContent = surface ? `Superficie Alar: ${surface} cm²` : "Superficie Alar: -";
                 } else if (calcSurface) {
                     let length = parseFloat(document.getElementById("length").value);
                     let width = parseFloat(document.getElementById("width").value);
                     if (length && width) {
-                        let surface = (length * width);
-                        let adjustedSurface = (surface / 100).toFixed(2); // Aquí estaba el error, ahora se divide correctamente
-                        surfaceField.textContent = `Superficie Alar: ${adjustedSurface} cm²`;
+                        let surface = (length * width).toFixed(2);
+                        surfaceField.textContent = `Superficie Alar: ${surface} cm²`;
                     } else {
                         surfaceField.textContent = "Superficie Alar: -";
                     }
                 }
             }
-
-
         
             function calculateSurface() {
                 let length = parseFloat(document.getElementById("length").value);
                 let width = parseFloat(document.getElementById("width").value);
                 let surfaceField = document.getElementById("surface-result");
-
+                
                 if (length && width) {
-                    let surface = length * width;
-                    let adjustedSurface = (surface / 100).toFixed(2); // Mueve la coma decimal dos lugares
-                    surfaceField.textContent = `Superficie Alar: ${adjustedSurface} cm²`;
+                    let surface = (length * width).toFixed(2);
+                    surfaceField.textContent = `Superficie Alar: ${surface} cm²`;
                 } else {
                     surfaceField.textContent = "Superficie Alar: -";
                 }
             }
-
         </script>
 </head>
 <body>
     <div class="container">
-        <div class="input-group">
-            <label for="peso">Peso del avión (g)</label>
-            <input type="number" id="peso" placeholder="Ingrese el peso en gramos">
-        </div>
+        
         <div class="title">Tipo de Avión</div>
         <div class="option">
             <div class="option-row">
@@ -405,6 +386,10 @@
                 <label><input type="checkbox" class="coef-jets" onclick="handleCoefClick('coef-jets', this)" disabled> 10</label>
                 <label><input type="checkbox" class="coef-jets" onclick="handleCoefClick('coef-jets', this)" disabled> 11</label>
             </div>
+        </div>
+        <div class="input-group">
+            <label for="peso">Peso del avión (g)</label>
+            <input type="number" id="peso" placeholder="Ingrese el peso en gramos">
         </div>
         <div class="container">
             <div class="title">Tipo de Avión</div>
