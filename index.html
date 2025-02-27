@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seleccionar Opciones</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 400px;
+        }
+        .title {
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .input-group {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .input-group label {
+            font-size: 16px;
+            font-weight: bold;
+            display: block;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .option {
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .option:last-child {
+            border-bottom: none;
+        }
+        .option-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        label {
+            font-size: 18px;
+        }
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+        }
+        .coef-title {
+            margin-top: 5px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .coef-options {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 5px;
+        }
+        .dropdown {
+            margin-top: 15px;
+            text-align: center;
+        }
+        .dropdown-content {
+            display: none;
+            margin-top: 10px;
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .dropdown button {
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            background: #007BFF;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        function handleCheckboxClick(clickedCheckbox) {
+            document.querySelectorAll('.type-checkbox').forEach(checkbox => {
+                if (checkbox !== clickedCheckbox) {
+                    checkbox.checked = false;
+                }
+            });
+            document.querySelectorAll('.coef-options input').forEach(input => {
+                input.checked = false;
+                input.disabled = true;
+            });
+            let selectedCoef = clickedCheckbox.closest('.option').querySelectorAll('.coef-options input');
+            selectedCoef.forEach(input => input.disabled = false);
+        }
+        function handleCoefClick(group, clickedCheckbox) {
+            document.querySelectorAll(`.${group}`).forEach(checkbox => {
+                if (checkbox !== clickedCheckbox) {
+                    checkbox.checked = false;
+                }
+            });
+        }
+    </script>
+    <script>
+        function toggleDropdown() {
+            let content = document.getElementById("dropdown-content");
+            content.style.display = content.style.display === "block" ? "none" : "block";
+        }
+    </script>
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Seleccionar Opciones</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+                background-color: #f4f4f4;
+            }
+            .container {
+                background: white;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                width: 90%;
+                max-width: 400px;
+            }
+            .title {
+                font-size: 20px;
+                font-weight: bold;
+                text-align: center;
+                margin-bottom: 10px;
+            }
+            .input-group {
+                text-align: center;
+                margin-bottom: 15px;
+            }
+            .input-group label {
+                font-size: 16px;
+                font-weight: bold;
+                display: block;
+            }
+            .input-group input {
+                width: 100%;
+                padding: 8px;
+                margin-top: 5px;
+                font-size: 16px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                text-align: center;
+            }
+            .option {
+                display: flex;
+                flex-direction: column;
+                padding: 10px;
+                border-bottom: 1px solid #ddd;
+            }
+            .option:last-child {
+                border-bottom: none;
+            }
+            .option-row {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            label {
+                font-size: 18px;
+            }
+            input[type="checkbox"] {
+                width: 20px;
+                height: 20px;
+            }
+            .coef-title {
+                margin-top: 5px;
+                font-size: 16px;
+                font-weight: bold;
+            }
+            .coef-options {
+                display: flex;
+                justify-content: space-around;
+                margin-top: 5px;
+            }
+            .result {
+                margin-top: 20px;
+                text-align: center;
+                font-size: 18px;
+                font-weight: bold;
+            }
+            .checkbox-group {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
+            }
+            .hidden {
+                display: none;
+            }
+        </style>
+        <script>
+            function handleCheckboxClick(clickedCheckbox) {
+                document.querySelectorAll('.type-checkbox').forEach(checkbox => {
+                    if (checkbox !== clickedCheckbox) {
+                        checkbox.checked = false;
+                    }
+                });
+                document.querySelectorAll('.coef-options input').forEach(input => {
+                    input.checked = false;
+                    input.disabled = true;
+                });
+                let selectedCoef = clickedCheckbox.closest('.option').querySelectorAll('.coef-options input');
+                selectedCoef.forEach(input => input.disabled = false);
+            }
+            function handleCoefClick(group, clickedCheckbox) {
+                document.querySelectorAll(`.${group}`).forEach(checkbox => {
+                    if (checkbox !== clickedCheckbox) {
+                        checkbox.checked = false;
+                    }
+                });
+                calculateResult();
+            }
+            function calculateResult() {
+                let peso = parseFloat(document.getElementById("peso").value);
+                let coeficiente = document.querySelector(".coef-options input:checked");
+                let resultField = document.getElementById("resultado");
+                
+                if (peso && coeficiente) {
+                    let coefValue = parseFloat(coeficiente.nextSibling.textContent.trim());
+                    let resultado = (peso / coefValue).toFixed(2);
+                    resultField.textContent = `Resultado: ${resultado}`;
+                } else {
+                    resultField.textContent = "Resultado: -";
+                }
+            }
+            document.getElementById("peso").addEventListener("input", calculateResult);
+        </script>
+        <script>
+            const valoresReferencia = [
+                1, 2.83, 5.2, 8, 11.2, 14.7, 18.5, 22.6, 27, 31.6, 36.5, 41.6, 46.9, 52.4, 58.1, 64, 70.1, 76.6, 82.8, 89.4,
+                96.2, 103, 110, 118, 125, 133, 140, 148, 156, 164, 173, 181, 190, 198, 207, 216, 225, 234, 244, 253, 263, 272, 282,
+                292, 302, 312, 322, 333, 343, 354
+            ];
+            
+            function calculateResult() {
+                let peso = parseFloat(document.getElementById("peso").value);
+                let coeficiente = document.querySelector(".coef-options input:checked");
+                let resultField = document.getElementById("resultado");
+                let indexField = document.getElementById("indice");
+                
+                if (peso && coeficiente) {
+                    let coefValue = parseFloat(coeficiente.nextSibling.textContent.trim());
+                    let resultado = (peso / coefValue).toFixed(2);
+                    resultField.textContent = `Resultado: ${resultado}`;
+                    
+                    let valorMasCercano = valoresReferencia.find(v => v >= resultado) || valoresReferencia[valoresReferencia.length - 1];
+                    let indice = valoresReferencia.indexOf(valorMasCercano) + 1;
+                    indexField.textContent = `Índice correspondiente: ${indice}`;
+                } else {
+                    resultField.textContent = "Resultado: -";
+                    indexField.textContent = "Índice correspondiente: -";
+                }
+            }
+            function toggleSurfaceFields(clickedCheckbox) {
+                document.getElementById("add-surface").checked = false;
+                document.getElementById("calc-surface").checked = false;
+                clickedCheckbox.checked = true;
+
+                let addSurface = document.getElementById("add-surface").checked;
+                let calcSurface = document.getElementById("calc-surface").checked;
+
+                // Mostrar solo la sección correcta sin afectar otros campos
+                document.getElementById("surface-value").classList.toggle("hidden", !addSurface);
+                document.getElementById("surface-fields").classList.toggle("hidden", !calcSurface);
+
+                // Asegurar que el campo de peso siempre esté visible
+                document.getElementById("peso").parentElement.classList.remove("hidden");
+
+                // Desplazar la vista hacia el campo de peso del avión para evitar que quede oculto
+                document.getElementById("peso").scrollIntoView({ behavior: "smooth", block: "center" });
+
+                updateSurfaceResult();
+            }
+
+
+
+            function updateSurfaceResult() {
+                let surfaceField = document.getElementById("surface-result");
+                let addSurface = document.getElementById("add-surface").checked;
+                let calcSurface = document.getElementById("calc-surface").checked;
+
+                if (addSurface) {
+                    let surface = parseFloat(document.getElementById("surface").value);
+                    let adjustedSurface = surface ? (surface / 100).toFixed(2) : "-";
+                    surfaceField.textContent = surface ? `Superficie Alar: ${adjustedSurface} cm²` : "Superficie Alar: -";
+                } else if (calcSurface) {
+                    let length = parseFloat(document.getElementById("length").value);
+                    let width = parseFloat(document.getElementById("width").value);
+                    if (length && width) {
+                        let surface = (length * width);
+                        let adjustedSurface = (surface / 100).toFixed(2); // Aquí estaba el error, ahora se divide correctamente
+                        surfaceField.textContent = `Superficie Alar: ${adjustedSurface} cm²`;
+                    } else {
+                        surfaceField.textContent = "Superficie Alar: -";
+                    }
+                }
+            }
+
+
+        
+            function calculateSurface() {
+                let length = parseFloat(document.getElementById("length").value);
+                let width = parseFloat(document.getElementById("width").value);
+                let surfaceField = document.getElementById("surface-result");
+
+                if (length && width) {
+                    let surface = length * width;
+                    let adjustedSurface = (surface / 100).toFixed(2); // Mueve la coma decimal dos lugares
+                    surfaceField.textContent = `Superficie Alar: ${adjustedSurface} cm²`;
+                } else {
+                    surfaceField.textContent = "Superficie Alar: -";
+                }
+            }
+
+        </script>
+</head>
+<body>
+    <div class="container">
+        <div class="input-group">
+            <label for="peso">Peso del avión (g)</label>
+            <input type="number" id="peso" placeholder="Ingrese el peso en gramos">
+        </div>
+        <div class="title">Tipo de Avión</div>
+        <div class="option">
+            <div class="option-row">
+                <label for="planeador">Planeador</label>
+                <input type="checkbox" id="planeador" class="type-checkbox" onclick="handleCheckboxClick(this)">
+            </div>
+            <div class="coef-title">Coeficiente C</div>
+            <div class="coef-options">
+                <label><input type="checkbox" class="coef-planeador" onclick="handleCoefClick('coef-planeador', this)" disabled> 3</label>
+                <label><input type="checkbox" class="coef-planeador" onclick="handleCoefClick('coef-planeador', this)" disabled> 4</label>
+                <label><input type="checkbox" class="coef-planeador" onclick="handleCoefClick('coef-planeador', this)" disabled> 5</label>
+            </div>
+        </div>
+        <div class="option">
+            <div class="option-row">
+                <label for="entrenador">Entrenador</label>
+                <input type="checkbox" id="entrenador" class="type-checkbox" onclick="handleCheckboxClick(this)">
+            </div>
+            <div class="coef-title">Coeficiente C</div>
+            <div class="coef-options">
+                <label><input type="checkbox" class="coef-entrenador" onclick="handleCoefClick('coef-entrenador', this)" disabled> 5</label>
+                <label><input type="checkbox" class="coef-entrenador" onclick="handleCoefClick('coef-entrenador', this)" disabled> 6</label>
+                <label><input type="checkbox" class="coef-entrenador" onclick="handleCoefClick('coef-entrenador', this)" disabled> 7</label>
+                <label><input type="checkbox" class="coef-entrenador" onclick="handleCoefClick('coef-entrenador', this)" disabled> 8</label>
+            </div>
+        </div>
+        <div class="option">
+            <div class="option-row">
+                <label for="escala">Escala</label>
+                <input type="checkbox" id="escala" class="type-checkbox" onclick="handleCheckboxClick(this)">
+            </div>
+            <div class="coef-title">Coeficiente C</div>
+            <div class="coef-options">
+                <label><input type="checkbox" class="coef-escala" onclick="handleCoefClick('coef-escala', this)" disabled> 8</label>
+                <label><input type="checkbox" class="coef-escala" onclick="handleCoefClick('coef-escala', this)" disabled> 9</label>
+                <label><input type="checkbox" class="coef-escala" onclick="handleCoefClick('coef-escala', this)" disabled> 10</label>
+            </div>
+        </div>
+        <div class="option">
+            <div class="option-row">
+                <label for="jets">Jets a EDF</label>
+                <input type="checkbox" id="jets" class="type-checkbox" onclick="handleCheckboxClick(this)">
+            </div>
+            <div class="coef-title">Coeficiente C</div>
+            <div class="coef-options">
+                <label><input type="checkbox" class="coef-jets" onclick="handleCoefClick('coef-jets', this)" disabled> 8</label>
+                <label><input type="checkbox" class="coef-jets" onclick="handleCoefClick('coef-jets', this)" disabled> 9</label>
+                <label><input type="checkbox" class="coef-jets" onclick="handleCoefClick('coef-jets', this)" disabled> 10</label>
+                <label><input type="checkbox" class="coef-jets" onclick="handleCoefClick('coef-jets', this)" disabled> 11</label>
+            </div>
+        </div>
+        <div class="container">
+            <div class="title">Tipo de Avión</div>
+            <div class="result" id="resultado">Resultado: -</div>
+        </div>
+        <div class="container">
+            
+            <div class="title">Superficie Alar</div>
+            <div class="checkbox-group">
+                <label><input type="checkbox" id="add-surface" onclick="toggleSurfaceFields(this)"> Añadir Superficie</label>
+                <label><input type="checkbox" id="calc-surface" onclick="toggleSurfaceFields(this)"> Calcular Superficie</label>
+
+            </div>
+            
+            <div id="surface-value" class="input-group hidden">
+                <p></p>
+                <label for="surface">Ingrese Superficie</label>
+                <input type="number" id="surface" placeholder="Ingrese superficie en cm²" oninput="updateSurfaceResult()">
+
+            </div>
+            
+            <div id="surface-fields" class="input-group hidden">
+                <p></p>
+                <label for="length">Largo (cm)</label>
+                <input type="number" id="length" placeholder="Ingrese largo" oninput="calculateSurface()">
+                <label for="width">Ancho (cm)</label>
+                <input type="number" id="width" placeholder="Ingrese ancho" oninput="calculateSurface()">
+            </div>
+            
+            <div class="result" id="surface-result">Superficie Alar: -</div>
+        </div>
+        <div class="container">
+            <div class="result" id="indice">Índice correspondiente dm^2: -</div>
+        </div>
+        <div class="dropdown">
+            <button onclick="toggleDropdown()">Mostrar Datos</button>
+            <div id="dropdown-content" class="dropdown-content">
+                <table>
+                    <tr><th>Índice</th><th>Valor</th></tr>
+                    <tr><td>1</td><td>1</td></tr>
+                    <tr><td>2</td><td>2.83</td></tr>
+                    <tr><td>3</td><td>5.2</td></tr>
+                    <tr><td>4</td><td>8</td></tr>
+                    <tr><td>5</td><td>11.2</td></tr>
+                    <tr><td>6</td><td>14.7</td></tr>
+                    <tr><td>7</td><td>18.5</td></tr>
+                    <tr><td>8</td><td>22.6</td></tr>
+                    <tr><td>9</td><td>27</td></tr>
+                    <tr><td>10</td><td>31.6</td></tr>
+                    <tr><td>11</td><td>36.5</td></tr>
+                    <tr><td>12</td><td>41.6</td></tr>
+                    <tr><td>13</td><td>46.9</td></tr>
+                    <tr><td>14</td><td>52.4</td></tr>
+                    <tr><td>15</td><td>58.1</td></tr>
+                    <tr><td>16</td><td>64</td></tr>
+                    <tr><td>17</td><td>70.1</td></tr>
+                    <tr><td>18</td><td>76.6</td></tr>
+                    <tr><td>19</td><td>82.8</td></tr>
+                    <tr><td>20</td><td>89.4</td></tr>
+                    <tr><td>...</td><td>...</td></tr>
+                    <tr><td>50</td><td>354</td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
